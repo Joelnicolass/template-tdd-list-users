@@ -1,0 +1,6 @@
+<div class="container">
+  <div class="card-container" *ngFor="let user of users">
+    <app-card [header]="user.name" [body]="user.email"> </app-card>
+    <app-buttons [deleteUser]="deleteUser" [id]="user.id"></app-buttons>
+  </div>
+</div>
