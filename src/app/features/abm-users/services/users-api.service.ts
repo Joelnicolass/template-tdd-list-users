@@ -27,10 +27,9 @@ export class UsersApiService {
         this._saveUsers(usersAdapted);
       },
       error: (err) => {
-        const error = new Error(err);
-        throwError(() => {
-          return error;
-        });
+        console.log('err', err);
+        this._saveUsers([]);
+        return;
       },
       complete: () => {
         sub.unsubscribe();

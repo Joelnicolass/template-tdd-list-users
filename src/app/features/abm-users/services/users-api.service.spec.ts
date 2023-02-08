@@ -8,6 +8,7 @@ import { UsersApiService, url } from './users-api.service';
 import { MOCK_GET_USERS } from '../mock/MOCK_GET_USERS';
 import { IUsersApi, IUsers } from '../models/user.interface';
 import { MOCK_USERS } from '../mock/MOCK_USERS';
+import { StoreGlobalService } from '../../../core/store-global.service';
 
 describe('UsersApiService', () => {
   let service: UsersApiService;
@@ -16,6 +17,7 @@ describe('UsersApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [StoreGlobalService],
     });
     service = TestBed.inject(UsersApiService);
     controller = TestBed.inject(HttpTestingController);
@@ -49,7 +51,7 @@ describe('UsersApiService', () => {
     expect(res).toEqual(mockAdapted);
   });
 
-  it('get users with error should call throwError', () => {
+  it('get users with error should save [] in store', (done) => {
     const mock: IUsersApi[] = MOCK_GET_USERS;
 
     service.getUsers();
@@ -57,7 +59,11 @@ describe('UsersApiService', () => {
     const req = controller.expectOne(url);
     req.error(new ProgressEvent('error'));
 
-    expect(req.request.method).toEqual('GET');
+    service['store'].state$.subscribe((state) => {
+      console.log(state.users);
+      expect(state.users).toEqual([]);
+      done();
+    });
   });
 
   it('getUsers should call adapter', () => {

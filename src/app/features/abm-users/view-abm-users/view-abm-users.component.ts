@@ -21,6 +21,9 @@ export class ViewAbmUsersComponent {
     private usersApiService: UsersApiService
   ) {
     this.users$ = this.store.suscribeOnly('users');
+    this.users$.subscribe((users) => {
+      console.log('users', users);
+    });
   }
 
   ngOnInit(): void {
