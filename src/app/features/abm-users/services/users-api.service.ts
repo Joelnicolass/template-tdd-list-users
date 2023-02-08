@@ -12,7 +12,7 @@ import {
 import { IUsersApi, IUsers } from '../models/user.interface';
 import { StoreGlobalService } from 'src/app/core/store-global.service';
 
-export const url = 'https://jsonplaceholder.typicode.com/users';
+export const url = 'https://jsonplaceholder.typicode.com/usersa';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class UsersApiService {
         this._saveUsers(usersAdapted);
       },
       error: (err) => {
-        console.log('err', err);
+        console.log('catch del servicio');
         this._saveUsers([]);
         return;
       },
